@@ -1,0 +1,22 @@
+name: Flask DevOps CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build Docker Image
+      run: docker build -t flask-devops-app .
+
+    - name: Run Container (Test)
+      run: docker run -d -p 5000:5000 flask-devops-app
+
+    - name: Check running containers
+      run: docker ps
